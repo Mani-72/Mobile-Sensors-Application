@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.example.mobilesensorapplication"
+        minSdkVersion 26
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    ext {
+        versions = [
+                'javacv': '1.4.2',
+                'ffmpeg': '4.0.1'
+
+        ]
+
+    }
+
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'com.google.android.material:material:1.2.1'
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+        testImplementation 'junit:junit:4.+'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+        // For Graph
+        compile files('libs/achartengine-1.1.0.jar')
+        //For openCV
+        implementation 'com.opencsv:opencsv:5.3'
+
+        // Add from other project for video recording
+        implementation(group: 'org.bytedeco', name: 'javacv-platform', version: versions.javacv) {
+            exclude group: 'org.bytedeco.javacpp-presets'
+        }
+        implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}"
+        implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm'
+        implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm64'
+
+        // Adroid security purpose library
+        implementation "androidx.security:security-crypto:1.0.0"
+
+        // For Identity Credential APIs
+      //  implementation "androidx.security:security-identity-credential:1.0.0-alpha03"
+
+        // For App Authentication APIs
+       // implementation "androidx.security:security-app-authenticator:1.0.0-alpha02"
+
+        // For App Authentication API testing
+       // androidTestImplementation "androidx.security:security-app-authenticator:1.0.0-alpha01"
+
+
+    }
+}
